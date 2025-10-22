@@ -1,0 +1,12 @@
+/* Styles extracted from Scanner.vue (component layout helpers) */
+.simple-crypto-monitor {
+  padding: 8px;
+  color: var(--text-color, #111);
+}
+
+/* Keep v-card tweaks that were in page level styles minimal; prefer theme tokens when possible */
+.scanner-card {
+  background-color: #ffffff;
+  border: 1px solid #e5e5e5;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
