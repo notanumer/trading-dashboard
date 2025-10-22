@@ -1,7 +1,7 @@
 import { Box } from '@chakra-ui/react';
 import type { ChartInterval, ChartTheme, SignalDetectedCallback } from '@shared/types';
 import { memo, useCallback, useId, useState } from 'react';
-import { useSignalDetection, useSignalsCache, useTradingViewWidget } from '../hooks';
+import { useSignalsCache, useTradingViewWidget } from '../hooks';
 import { LogsPanel, SignalsButton } from './components';
 
 interface TradingViewChartProps {
@@ -13,7 +13,7 @@ interface TradingViewChartProps {
 }
 
 /**
- * TradingView chart component with signal detection
+ * TradingView chart component with manual signal tracking
  */
 export const TradingViewChart = memo<TradingViewChartProps>(
   ({
@@ -32,7 +32,7 @@ export const TradingViewChart = memo<TradingViewChartProps>(
     // Signals cache management
     const {
       signalsCache,
-      saveSignal,
+      //saveSignal,
       clearSignals,
       exportSignals,
       hasNewSignals,
@@ -43,24 +43,13 @@ export const TradingViewChart = memo<TradingViewChartProps>(
       onSignalDetected,
     });
 
-    // Signal detection
-    const { startMonitoring } = useSignalDetection({
-      containerId,
-      onSignalFound: saveSignal,
-    });
-
     // TradingView widget initialization
-    const handleChartReady = useCallback(() => {
-      startMonitoring();
-    }, [startMonitoring]);
-
     useTradingViewWidget({
       containerId,
       symbol,
       interval,
       theme,
       studies,
-      onChartReady: handleChartReady,
     });
 
     // Handle opening logs panel
@@ -81,6 +70,11 @@ export const TradingViewChart = memo<TradingViewChartProps>(
 
     return (
       <Box position="relative" width="100%" height="100%">
+        {/* <AddSignalButton
+          symbol={symbol}
+          onAddSignal={saveSignal}
+        /> */}
+
         <SignalsButton
           signalsCount={signalsCache.length}
           hasNewSignals={hasNewSignals}
@@ -92,7 +86,7 @@ export const TradingViewChart = memo<TradingViewChartProps>(
           id={containerId}
           width="100%"
           height="100%"
-          minHeight="500px"
+          minHeight="650px"
         />
 
         <LogsPanel

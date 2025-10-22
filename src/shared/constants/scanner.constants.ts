@@ -1,9 +1,9 @@
 import type { Category, Strategy, SymbolItem } from '@shared/types';
 import {
-    FaBitcoin,
-    FaChartLine,
-    FaEuroSign,
-    FaOilCan,
+  FaBitcoin,
+  FaChartLine,
+  FaEuroSign,
+  FaOilCan,
 } from 'react-icons/fa';
 
 /**
@@ -72,6 +72,8 @@ export const CRYPTO_SYMBOLS: readonly SymbolItem[] = [
   { symbol: 'BINANCE:ETHUSDT', title: 'ETH/USDT' },
   { symbol: 'BINANCE:XRPUSDT', title: 'XRP/USDT' },
   { symbol: 'BINANCE:SOLUSDT', title: 'SOL/USDT' },
+  { symbol: 'BINANCE:LINKUSDT', title: 'LINK/USDT' },
+  { symbol: 'BINANCE:DOGEUSDT', title: 'DOGE/USDT' },
 ] as const;
 
 /**
@@ -88,5 +90,6 @@ export const INDICES_SYMBOLS: readonly SymbolItem[] = [
  */
 export const SCANNER_STORAGE_KEYS = {
   CATEGORY: 'scanner:selectedCategory',
+  STRATEGY: 'scanner:selectedStrategy',
 } as const;
 

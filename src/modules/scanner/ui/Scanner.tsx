@@ -1,24 +1,24 @@
 import {
-    Box,
-    Card,
-    HStack,
-    Icon,
-    Input,
-    List,
-    ListItem,
-    Select,
-    SimpleGrid,
-    Text,
-    VStack,
+  Box,
+  Card,
+  HStack,
+  Icon,
+  Input,
+  List,
+  ListItem,
+  Select,
+  SimpleGrid,
+  Text,
+  VStack,
 } from '@chakra-ui/react';
 import {
-    CATEGORIES,
-    COMMODITIES_SYMBOLS,
-    CRYPTO_SYMBOLS,
-    FOREX_SYMBOLS,
-    INDICES_SYMBOLS,
-    SCANNER_STORAGE_KEYS,
-    STRATEGIES,
+  CATEGORIES,
+  COMMODITIES_SYMBOLS,
+  CRYPTO_SYMBOLS,
+  FOREX_SYMBOLS,
+  INDICES_SYMBOLS,
+  SCANNER_STORAGE_KEYS,
+  STRATEGIES,
 } from '@shared/constants';
 import type { Category, CategoryType, Strategy, SymbolItem } from '@shared/types';
 import { StorageService } from '@shared/utils';
@@ -45,12 +45,30 @@ export const Scanner = memo<ScannerProps>(
       }
       return 'Forex';
     });
+
+    const [selectedStrategy, setSelectedStrategy] = useState<string>(() => {
+      // Load strategy from localStorage on mount
+      const storedStrategy = StorageService.getItem<string>(
+        SCANNER_STORAGE_KEYS.STRATEGY,
+        STRATEGIES[0].title
+      );
+      if (STRATEGIES.find((s) => s.title === storedStrategy)) {
+        return storedStrategy;
+      }
+      return STRATEGIES[0].title;
+    });
+
     const [cryptoSearch, setCryptoSearch] = useState('');
 
     // Save category to localStorage
     useEffect(() => {
       StorageService.setItem(SCANNER_STORAGE_KEYS.CATEGORY, selectedCategory);
     }, [selectedCategory]);
+
+    // Save strategy to localStorage
+    useEffect(() => {
+      StorageService.setItem(SCANNER_STORAGE_KEYS.STRATEGY, selectedStrategy);
+    }, [selectedStrategy]);
 
     // Get symbols for selected category
     const getSymbolsForCategory = useCallback((category: CategoryType): readonly SymbolItem[] => {
@@ -95,6 +113,7 @@ export const Scanner = memo<ScannerProps>(
       (title: string) => {
         const strategy = STRATEGIES.find((s) => s.title === title);
         if (strategy) {
+          setSelectedStrategy(title);
           onStrategyChange(strategy);
         }
       },
@@ -112,7 +131,7 @@ export const Scanner = memo<ScannerProps>(
               </Text>
               <Select
                 onChange={(e) => handleStrategyChange(e.target.value)}
-                defaultValue={STRATEGIES[0].title}
+                value={selectedStrategy}
                 size="sm"
               >
                 {STRATEGIES.map((strategy) => (

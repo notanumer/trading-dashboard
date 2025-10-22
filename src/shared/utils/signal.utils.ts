@@ -4,14 +4,26 @@ import type { PriceLevels } from '@shared/types';
  * Extract price levels from text containing numbers
  */
 export const extractPricesFromText = (text: string): PriceLevels => {
-  const numbers = text.match(/[\d.]+/g);
   const prices: PriceLevels = {};
 
-  if (numbers && numbers.length >= 2) {
-    prices.entry = numbers[0];
-    prices.sl = numbers[1];
-    if (numbers.length > 2) {
-      prices.tp1 = numbers[2];
+  // Try to extract with labels first
+  const entryMatch = text.match(/entry[:\s]+([0-9.]+)/i);
+  const slMatch = text.match(/sl[:\s]+([0-9.]+)/i);
+  const tp1Match = text.match(/tp\s*1?[:\s]+([0-9.]+)/i);
+
+  if (entryMatch) prices.entry = entryMatch[1];
+  if (slMatch) prices.sl = slMatch[1];
+  if (tp1Match) prices.tp1 = tp1Match[1];
+
+  // Fallback: extract all numbers if labels not found
+  if (!prices.entry && !prices.sl && !prices.tp1) {
+    const numbers = text.match(/[\d.]+/g);
+    if (numbers && numbers.length >= 2) {
+      prices.entry = numbers[0];
+      prices.sl = numbers[1];
+      if (numbers.length > 2) {
+        prices.tp1 = numbers[2];
+      }
     }
   }
 

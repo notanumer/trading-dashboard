@@ -58,7 +58,9 @@ export const useSignalsCache = ({
           now - s.timestamp < DUPLICATE_DETECTION_WINDOW
       );
 
-      if (recentDuplicate) return;
+      if (recentDuplicate) {
+        return;
+      }
 
       const signalData: TradingSignal = {
         id: generateSignalId(symbol, signal, entry),

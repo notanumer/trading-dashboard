@@ -1,6 +1,6 @@
 import { DEFAULT_CHART_CONFIG } from '@shared/constants';
 import type { ChartInterval, ChartTheme } from '@shared/types';
-import { useCallback, useEffect, useRef } from 'react';
+import { useEffect, useRef } from 'react';
 
 interface TradingViewWidget {
   remove?: () => void;
@@ -37,7 +37,6 @@ interface UseTradingViewWidgetProps {
   interval: ChartInterval;
   theme: ChartTheme;
   studies: string[];
-  onChartReady?: (widget: TradingViewWidget) => void;
 }
 
 /**
@@ -49,60 +48,67 @@ export const useTradingViewWidget = ({
   interval,
   theme,
   studies,
-  onChartReady,
 }: UseTradingViewWidgetProps) => {
   const chartRef = useRef<TradingViewWidget | null>(null);
+  const prevSymbolRef = useRef(symbol);
+  const prevStudiesRef = useRef(studies);
 
-  const loadTradingViewScript = useCallback((): Promise<void> => {
-    return new Promise((resolve) => {
-      if (window.TradingView) {
-        resolve();
-        return;
-      }
-
-      const script = document.createElement('script');
-      script.src = 'https://s3.tradingview.com/tv.js';
-      script.async = true;
-      script.onload = () => resolve();
-      document.head.appendChild(script);
-    });
-  }, []);
-
-  const initializeChart = useCallback(() => {
-    const TradingView = window.TradingView;
-    if (!TradingView) return;
-
-    const chartConfig = {
-      ...DEFAULT_CHART_CONFIG,
-      symbol,
-      interval,
-      theme,
-      container_id: containerId,
-      studies,
-      onChartReady: () => {
-        if (chartRef.current && onChartReady) {
-          onChartReady(chartRef.current);
+  // Initialize and manage chart lifecycle
+  useEffect(() => {
+    const loadScript = (): Promise<void> => {
+      return new Promise((resolve) => {
+        if (window.TradingView) {
+          resolve();
+          return;
         }
-      },
+
+        const script = document.createElement('script');
+        script.src = 'https://s3.tradingview.com/tv.js';
+        script.async = true;
+        script.onload = () => resolve();
+        document.head.appendChild(script);
+      });
     };
 
-    chartRef.current = new TradingView.widget(chartConfig);
-  }, [containerId, interval, symbol, theme, studies, onChartReady]);
+    const createWidget = () => {
+      const TradingView = window.TradingView;
+      if (!TradingView) return;
 
-  const reinitializeChart = useCallback(() => {
-    if (chartRef.current?.remove) {
-      chartRef.current.remove();
+      const chartConfig = {
+        ...DEFAULT_CHART_CONFIG,
+        symbol,
+        interval,
+        theme,
+        container_id: containerId,
+        studies,
+      };
+
+      chartRef.current = new TradingView.widget(chartConfig);
+    };
+
+    // Check if we need to reinitialize
+    const symbolChanged = prevSymbolRef.current !== symbol;
+    const studiesChanged = JSON.stringify(prevSymbolRef.current) !== JSON.stringify(studies);
+
+    if (symbolChanged || studiesChanged) {
+      // Remove old widget
+      if (chartRef.current?.remove) {
+        chartRef.current.remove();
+      }
+
+      // Update refs
+      prevSymbolRef.current = symbol;
+      prevStudiesRef.current = studies;
+
+      // Create new widget
+      loadScript().then(createWidget);
+    } else if (!chartRef.current) {
+      // Initial creation
+      prevSymbolRef.current = symbol;
+      prevStudiesRef.current = studies;
+      loadScript().then(createWidget);
     }
-    initializeChart();
-  }, [initializeChart]);
-
-  useEffect(() => {
-    loadTradingViewScript().then(initializeChart);
-  }, [loadTradingViewScript, initializeChart]);
-
-  useEffect(() => {
-    reinitializeChart();
-  }, [symbol, studies, reinitializeChart]);
+  }, [symbol, studies, interval, theme, containerId]);
 
   return { chartRef };
 };

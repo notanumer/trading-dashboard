@@ -1,19 +1,19 @@
 import {
-    Box,
-    Button,
-    ButtonGroup,
-    Flex,
-    Heading,
-    HStack,
-    Modal,
-    ModalBody,
-    ModalCloseButton,
-    ModalContent,
-    ModalHeader,
-    ModalOverlay,
-    Text,
-    useDisclosure,
-    VStack,
+  Box,
+  Button,
+  ButtonGroup,
+  Flex,
+  Heading,
+  HStack,
+  Modal,
+  ModalBody,
+  ModalCloseButton,
+  ModalContent,
+  ModalHeader,
+  ModalOverlay,
+  Text,
+  useDisclosure,
+  VStack,
 } from '@chakra-ui/react';
 import type { TradingSignal } from '@shared/types';
 import { memo, useCallback, useMemo } from 'react';
@@ -63,8 +63,8 @@ export const LogsPanel = memo<LogsPanelProps>(
         >
           <ModalOverlay bg="blackAlpha.300" backdropFilter="blur(10px)" />
           <ModalContent maxH="80vh">
-            <ModalHeader>
-              <Flex justify="space-between" align="center">
+            <ModalHeader pb={4}>
+              <Flex justify="space-between" align="center" pr={8}>
                 <Heading size="md">📊 Trading Signals Log</Heading>
                 <ButtonGroup size="sm" spacing={2}>
                   <Button colorScheme="red" onClick={handleClearConfirm}>
@@ -76,7 +76,7 @@ export const LogsPanel = memo<LogsPanelProps>(
                 </ButtonGroup>
               </Flex>
             </ModalHeader>
-            <ModalCloseButton />
+            <ModalCloseButton top={4} right={4} />
 
             <Box
               bg="gray.50"

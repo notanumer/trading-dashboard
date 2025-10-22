@@ -14,11 +14,6 @@ export const MAX_SIGNALS_CACHE = 100 as const;
 export const DUPLICATE_DETECTION_WINDOW = 5000 as const;
 
 /**
- * Signal monitoring delay (milliseconds)
- */
-export const SIGNAL_MONITORING_DELAY = 1500 as const;
-
-/**
  * Default chart configuration
  */
 export const DEFAULT_CHART_CONFIG = {
