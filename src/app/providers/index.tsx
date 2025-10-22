@@ -1,17 +1,20 @@
-import { type ReactNode } from 'react';
+import type { ReactNode } from 'react';
 import { ChakraProvider } from './chakra';
-import { ToastProvider } from './toast';
+import { ErrorBoundary } from './error-boundary';
 
 interface AppProviderProps {
   children: ReactNode;
 }
 
+/**
+ * Root application provider combining all context providers
+ */
 export const AppProvider = ({ children }: AppProviderProps) => {
   return (
-    <ChakraProvider>
-      <ToastProvider>
+    <ErrorBoundary>
+      <ChakraProvider>
         {children}
-      </ToastProvider>
-    </ChakraProvider>
+      </ChakraProvider>
+    </ErrorBoundary>
   );
 };

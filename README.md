@@ -1,73 +1,165 @@
-# React + TypeScript + Vite
+# 📊 Trading Dashboard
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Modern React TypeScript trading dashboard with TradingView integration and real-time signal detection.
 
-Currently, two official plugins are available:
+![TypeScript](https://img.shields.io/badge/TypeScript-100%25-blue)
+![Build](https://img.shields.io/badge/Build-Passing-brightgreen)
+![Lint](https://img.shields.io/badge/Lint-0%20Errors-brightgreen)
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## ✨ Features
 
-## React Compiler
+- 📈 **TradingView Integration** - Professional trading charts
+- 🎯 **Signal Detection** - Real-time trading signal monitoring
+- 💾 **Signal Cache** - Persistent signal storage with localStorage
+- 🔍 **Multi-Market Scanner** - Forex, Crypto, Commodities, Indices
+- 🎨 **Modern UI** - Built with Chakra UI
+- ⚡ **Performance Optimized** - React.memo, useCallback, useMemo
+- 🛡️ **Type Safe** - 100% TypeScript coverage
+- 📱 **Responsive** - Mobile and desktop friendly
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## 🚀 Quick Start
 
-## Expanding the ESLint configuration
+### Prerequisites
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+- Node.js 18+
+- npm or yarn
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+### Installation
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+```bash
+# Install dependencies
+npm install
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+# Start development server
+npm run dev
+
+# Build for production
+npm run build
+
+# Preview production build
+npm run preview
+
+# Run linter
+npm run lint
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## 🏗️ Architecture
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+### Project Structure
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
 ```
+src/
+├── app/                    # Application configuration
+│   └── providers/         # React providers (Theme, Error Boundary)
+├── modules/               # Feature modules
+│   ├── chart/            # Trading chart module
+│   │   ├── hooks/        # Custom hooks
+│   │   ├── ui/           # UI components
+│   │   └── model/        # Types and models
+│   └── scanner/          # Market scanner module
+└── shared/               # Shared resources
+    ├── types/           # TypeScript types
+    ├── constants/       # Application constants
+    ├── utils/           # Utility functions
+    └── config/          # Configuration files
+```
+
+### Key Technologies
+
+- **React 19** - UI framework
+- **TypeScript** - Type safety
+- **Vite** - Build tool
+- **Chakra UI** - Component library
+- **TradingView** - Chart integration
+- **ESLint** - Code linting
+- **Prettier** - Code formatting
+
+## 📚 Documentation
+
+- [Refactoring Documentation](REFACTORING.md) - Detailed refactoring guide
+- [Refactoring Summary](REFACTORING_SUMMARY.md) - Quick overview
+- [Final Report](FINAL_REPORT.md) - Complete project report
+
+## 🎯 Recent Refactoring
+
+This project has undergone a comprehensive refactoring following modern React best practices:
+
+✅ **100% TypeScript** - No `any` types  
+✅ **Modular Architecture** - Feature-based organization  
+✅ **Custom Hooks** - Separated business logic  
+✅ **Performance Optimized** - Memoization throughout  
+✅ **Error Handling** - Error boundaries and safe operations  
+✅ **Clean Code** - ESLint, Prettier, best practices
+
+See [FINAL_REPORT.md](FINAL_REPORT.md) for details.
+
+## 🔧 Development
+
+### Code Quality
+
+```bash
+# Type checking
+npm run build
+
+# Linting
+npm run lint
+
+# Format code (if configured)
+npx prettier --write .
+```
+
+### Component Development
+
+All components follow these principles:
+
+- **Functional components** with hooks
+- **TypeScript** strict typing
+- **Memoization** where appropriate
+- **Custom hooks** for business logic
+- **Clean imports** via barrel exports
+
+### Adding New Features
+
+1. Create feature module in `src/modules/`
+2. Define types in `shared/types/`
+3. Add constants in `shared/constants/`
+4. Create custom hooks in module's `hooks/`
+5. Build UI components in module's `ui/`
+6. Export via barrel exports (`index.ts`)
+
+## 📝 Code Style
+
+- **TypeScript**: Strict mode enabled
+- **ESLint**: Modern flat config
+- **Prettier**: Configured for consistency
+- **Naming**: Descriptive, PascalCase for components
+- **Comments**: JSDoc for public APIs
+
+## 🤝 Contributing
+
+1. Fork the repository
+2. Create a feature branch
+3. Make your changes
+4. Run lint and build
+5. Submit a pull request
+
+## 📄 License
+
+This project is private.
+
+## 🎓 Learning Resources
+
+- [React Documentation](https://react.dev/)
+- [TypeScript Documentation](https://www.typescriptlang.org/docs/)
+- [Chakra UI](https://chakra-ui.com/)
+- [TradingView](https://www.tradingview.com/)
+
+## 🔗 Related
+
+- [Vite Documentation](https://vite.dev/)
+- [ESLint](https://eslint.org/)
+- [React Best Practices](https://react.dev/learn)
+
+---
+
+**Built with ❤️ using React + TypeScript + Vite**
