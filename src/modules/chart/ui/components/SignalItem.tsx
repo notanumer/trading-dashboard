@@ -63,6 +63,8 @@ export const SignalItem = memo<SignalItemProps>(({ signal }) => {
         <HStack>
           <Text fontWeight="semibold">Take Profit:</Text>
           <Text>{signal.tp1}</Text>
+          <Text>{signal.tp2}</Text>
+          <Text>{signal.tp3}</Text>
         </HStack>
         <Box
           mt={2}

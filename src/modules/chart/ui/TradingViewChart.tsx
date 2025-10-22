@@ -32,7 +32,6 @@ export const TradingViewChart = memo<TradingViewChartProps>(
     // Signals cache management
     const {
       signalsCache,
-      //saveSignal,
       clearSignals,
       exportSignals,
       hasNewSignals,
@@ -70,10 +69,6 @@ export const TradingViewChart = memo<TradingViewChartProps>(
 
     return (
       <Box position="relative" width="100%" height="100%">
-        {/* <AddSignalButton
-          symbol={symbol}
-          onAddSignal={saveSignal}
-        /> */}
 
         <SignalsButton
           signalsCount={signalsCache.length}

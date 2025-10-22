@@ -11,7 +11,7 @@ interface UseSignalsCacheProps {
 
 interface UseSignalsCacheReturn {
   signalsCache: TradingSignal[];
-  saveSignal: (signal: 'LONG' | 'SHORT', entry: string, sl: string, tp1: string) => void;
+  saveSignal: (signal: 'LONG' | 'SHORT', entry: string, sl: string, tp1: string, tp2: string, tp3: string) => void;
   clearSignals: () => void;
   exportSignals: () => void;
   hasNewSignals: boolean;
@@ -46,7 +46,7 @@ export const useSignalsCache = ({
 
   // Save a new signal
   const saveSignal = useCallback(
-    (signal: 'LONG' | 'SHORT', entry: string, sl: string, tp1: string) => {
+    (signal: 'LONG' | 'SHORT', entry: string, sl: string, tp1: string, tp2: string, tp3: string) => {
       const now = Date.now();
 
       // Check for duplicate signals
@@ -69,6 +69,8 @@ export const useSignalsCache = ({
         entry,
         sl,
         tp1,
+        tp2,
+        tp3,
         strategy: studies.map((s) => s.split(';')[0] || s).join(', '),
         timestamp: now,
       };

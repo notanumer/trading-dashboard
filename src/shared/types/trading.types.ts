@@ -8,6 +8,8 @@ export interface TradingSignal {
   entry: string;
   sl: string;
   tp1: string;
+  tp2: string;
+  tp3: string;
   strategy: string;
   timestamp: number;
 }
