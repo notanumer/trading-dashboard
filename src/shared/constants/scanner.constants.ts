@@ -74,6 +74,10 @@ export const CRYPTO_SYMBOLS: readonly SymbolItem[] = [
   { symbol: 'BINANCE:SOLUSDT', title: 'SOL/USDT' },
   { symbol: 'BINANCE:LINKUSDT', title: 'LINK/USDT' },
   { symbol: 'BINANCE:DOGEUSDT', title: 'DOGE/USDT' },
+  { symbol: 'BINANCE:FILUSDT', title: 'FIL/USDT' },
+  { symbol: 'BINANCE:RUNEUSDT', title: 'RUNE/USDT' },
+  { symbol: 'BINANCE:OPUSDT', title: 'OP/USDT' },
+  { symbol: 'BINANCE:WLDUSDT', title: 'WLD/USDT' },
 ] as const;
 
 /**
